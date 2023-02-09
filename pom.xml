@@ -6,7 +6,7 @@
 
     <groupId>com.shzcloud</groupId>
     <artifactId>visit</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>visit</name>
@@ -44,16 +44,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <junit-jupiter.version>5.9.2</junit-jupiter.version>
-        <slf4j.version>2.0.5</slf4j.version>
         <shz-core.version>1.1.4</shz-core.version>
         <shz-ast.version>1.0.1</shz-ast.version>
         <shz-spring-bean.version>1.0.5</shz-spring-bean.version>
         <shz-spring.version>1.1.6</shz-spring.version>
         <shz-orm.version>1.2.6</shz-orm.version>
-        <shz-jdbc.version>1.2.6</shz-jdbc.version>
+        <shz-jdbc.version>1.2.7</shz-jdbc.version>
         <spring.boot.version>2.7.4</spring.boot.version>
-        <mysql.version>8.0.30</mysql.version>
     </properties>
 
     <dependencyManagement>
@@ -69,18 +66,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.shzcloud</groupId>
             <artifactId>core</artifactId>
@@ -116,12 +101,6 @@
             <artifactId>jdbc</artifactId>
             <version>${shz-jdbc.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>

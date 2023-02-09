@@ -19,7 +19,7 @@ CREATE TABLE `sys_visit`  (
   `mac` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'mac地址',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '访问路径',
   `method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'GET' COMMENT '请求方法',
-  `referer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '链接来源',
+  `referer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '链接来源',
   `exception` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否异常',
   `exception_code` int NULL DEFAULT NULL COMMENT '异常编码',
   `exception_msg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '异常信息',
@@ -33,5 +33,9 @@ CREATE TABLE `sys_visit`  (
   INDEX `AK_idx_sys_visit_userid`(`userid`) USING BTREE,
   INDEX `AK_idx_sys_visit_ip`(`ip`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_visit
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

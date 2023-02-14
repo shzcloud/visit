@@ -1,50 +1,58 @@
-package shz.visit.entity;
+package shz.visit.vo;
 
-import shz.jdbc.record.JdbcConsistentHashRecordEntity;
-import shz.orm.annotation.Table;
-import shz.visit.hash.VisitConsistentHash;
+import shz.orm.annotation.Where;
+import shz.orm.enums.Condition;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Table("sys_visit")
-public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitConsistentHash> {
-    private Long id;
-    private LocalDateTime createTime;
+public class QueryVisitVo {
+    @Where(condition = Condition.BETWEEN)
+    private List<LocalDateTime> createTime;
+    @Where
     private String appName;
-    private LocalDateTime destroyedTime;
-    private Long elapsedTime;
+    @Where(condition = Condition.BETWEEN)
+    private List<LocalDateTime> destroyedTime;
+    @Where(condition = Condition.BETWEEN)
+    private List<Long> elapsedTime;
+    @Where
     private Boolean login;
+    @Where
     private Long userid;
+    @Where(condition = Condition.LIKE)
     private String username;
+    @Where
     private String ip;
+    @Where
     private Integer port;
+    @Where
     private String mac;
+    @Where(condition = Condition.LIKE)
     private String path;
+    @Where
     private String method;
+    @Where(condition = Condition.LIKE)
     private String referer;
+    @Where
     private Boolean exception;
+    @Where
     private Integer exceptionCode;
+    @Where(condition = Condition.LIKE)
     private String exceptionMsg;
+    @Where(condition = Condition.LIKE)
     private String browser;
+    @Where(condition = Condition.LIKE)
     private String browserVersion;
+    @Where(condition = Condition.LIKE)
     private String os;
+    @Where
     private Boolean ajax;
 
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreateTime() {
+    public List<LocalDateTime> getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(List<LocalDateTime> createTime) {
         this.createTime = createTime;
     }
 
@@ -56,19 +64,19 @@ public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitCons
         this.appName = appName;
     }
 
-    public LocalDateTime getDestroyedTime() {
+    public List<LocalDateTime> getDestroyedTime() {
         return destroyedTime;
     }
 
-    public void setDestroyedTime(LocalDateTime destroyedTime) {
+    public void setDestroyedTime(List<LocalDateTime> destroyedTime) {
         this.destroyedTime = destroyedTime;
     }
 
-    public Long getElapsedTime() {
+    public List<Long> getElapsedTime() {
         return elapsedTime;
     }
 
-    public void setElapsedTime(Long elapsedTime) {
+    public void setElapsedTime(List<Long> elapsedTime) {
         this.elapsedTime = elapsedTime;
     }
 
@@ -202,9 +210,8 @@ public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitCons
 
     @Override
     public String toString() {
-        return "SysVisit{" +
-                "id=" + id +
-                ", createTime=" + createTime +
+        return "QueryVisitVo{" +
+                "createTime=" + createTime +
                 ", appName='" + appName + '\'' +
                 ", destroyedTime=" + destroyedTime +
                 ", elapsedTime=" + elapsedTime +

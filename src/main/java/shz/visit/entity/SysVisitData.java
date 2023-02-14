@@ -2,7 +2,6 @@ package shz.visit.entity;
 
 import shz.core.ToString;
 import shz.jdbc.record.JdbcConsistentHashRecordEntity;
-import shz.orm.annotation.Id;
 import shz.orm.annotation.Table;
 import shz.visit.hash.VisitDataConsistentHash;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 @Table("sys_visit_data")
 public class SysVisitData extends JdbcConsistentHashRecordEntity<SysVisitData, VisitDataConsistentHash> {
-    @Id
     private Long id;
     private Long visitId;
     private String requestData;

@@ -3,6 +3,7 @@ package shz.visit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -13,10 +14,23 @@ import shz.visit.hash.VisitConsistentHash;
 import shz.visit.hash.VisitDataConsistentHash;
 import shz.visit.recorder.VisitDataRecorder;
 import shz.visit.recorder.VisitRecorder;
+import shz.visit.service.VisitDataService;
+import shz.visit.service.VisitService;
 
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnBean(VisitRecorder.class)
 class VisitAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(VisitService.class)
+    VisitService visitService() {
+        return new VisitService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(VisitRecorder.class)
+    VisitRecorder visitRecorder(VisitService service) {
+        return service::insert;
+    }
+
     @Bean
     @ConditionalOnMissingBean(VisitConsistentHash.class)
     VisitConsistentHash visitConsistentHash() {
@@ -46,6 +60,20 @@ class VisitAutoConfiguration {
     @Bean
     FilterRegistrationBean<VisitFilter> visitFilterRegistrationBean(VisitFilter filter) {
         return FilterHelp.registrationBean(filter);
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "visit.data.enabled", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnMissingBean(VisitDataService.class)
+    VisitDataService visitDataService() {
+        return new VisitDataService();
+    }
+
+    @Bean
+    @ConditionalOnBean(VisitDataService.class)
+    @ConditionalOnMissingBean(VisitDataRecorder.class)
+    VisitDataRecorder visitDataRecorder(VisitDataService service) {
+        return service::insert;
     }
 
     @Bean

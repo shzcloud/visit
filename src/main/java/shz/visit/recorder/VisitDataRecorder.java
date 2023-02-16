@@ -14,6 +14,8 @@ import shz.core.type.TypeHelp;
 import shz.visit.VisitHelp;
 import shz.visit.entity.SysVisitData;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.util.function.Consumer;
 
 @FunctionalInterface
@@ -55,7 +57,8 @@ public interface VisitDataRecorder extends Consumer<SysVisitData> {
         StringBuilder sb = new StringBuilder();
         for (Object arg : args) {
             if (NullHelp.isEmpty(arg)) sb.append("null");
-            else if (arg instanceof MultipartFile) {
+            else if (arg instanceof ServletRequest || arg instanceof ServletResponse) continue;
+            if (arg instanceof MultipartFile) {
                 MultipartFile file = (MultipartFile) arg;
                 sb.append(JSON.toJSONString(ToMap.get(4)
                         .put("name", file.getName())

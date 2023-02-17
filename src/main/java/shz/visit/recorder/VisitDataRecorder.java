@@ -56,8 +56,7 @@ public interface VisitDataRecorder extends Consumer<SysVisitData> {
         if (args.length == 0) return null;
         StringBuilder sb = new StringBuilder();
         for (Object arg : args) {
-            if (NullHelp.isEmpty(arg)) sb.append("null");
-            else if (arg instanceof ServletRequest || arg instanceof ServletResponse) continue;
+            if (NullHelp.isEmpty(arg) || arg instanceof ServletRequest || arg instanceof ServletResponse) continue;
             if (arg instanceof MultipartFile) {
                 MultipartFile file = (MultipartFile) arg;
                 sb.append(JSON.toJSONString(ToMap.get(4)

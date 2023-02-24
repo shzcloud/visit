@@ -1,6 +1,7 @@
 package shz.visit.entity;
 
 import shz.jdbc.record.JdbcConsistentHashRecordEntity;
+import shz.orm.annotation.Column;
 import shz.orm.annotation.Table;
 import shz.visit.hash.VisitConsistentHash;
 
@@ -29,6 +30,11 @@ public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitCons
     private String browserVersion;
     private String os;
     private Boolean ajax;
+
+    @Column(exist = false)
+    private boolean record;
+    @Column(exist = false)
+    private boolean dba;
 
     @Override
     public Long getId() {
@@ -200,6 +206,22 @@ public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitCons
         this.ajax = ajax;
     }
 
+    public boolean isRecord() {
+        return record;
+    }
+
+    public void setRecord(boolean record) {
+        this.record = record;
+    }
+
+    public boolean isDba() {
+        return dba;
+    }
+
+    public void setDba(boolean dba) {
+        this.dba = dba;
+    }
+
     @Override
     public String toString() {
         return "SysVisit{" +
@@ -224,6 +246,8 @@ public class SysVisit extends JdbcConsistentHashRecordEntity<SysVisit, VisitCons
                 ", browserVersion='" + browserVersion + '\'' +
                 ", os='" + os + '\'' +
                 ", ajax=" + ajax +
+                ", record=" + record +
+                ", dba=" + dba +
                 '}';
     }
 }

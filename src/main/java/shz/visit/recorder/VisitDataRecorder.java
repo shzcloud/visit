@@ -12,6 +12,7 @@ import shz.core.model.Response;
 import shz.core.model.Result;
 import shz.core.type.TypeHelp;
 import shz.visit.VisitHelp;
+import shz.visit.entity.SysVisit;
 import shz.visit.entity.SysVisitData;
 
 import javax.servlet.ServletRequest;
@@ -33,11 +34,11 @@ public interface VisitDataRecorder extends Consumer<SysVisitData> {
 
     default MethodInterceptor interceptor() {
         return invocation -> {
-            Long id = VisitHelp.getId();
             SysVisitData visitData = null;
-            if (id != null) {
+            SysVisit visit = VisitHelp.get();
+            if (visit != null && visit.isRecord() && visit.getId() != null) {
                 visitData = new SysVisitData();
-                visitData.setVisitId(id);
+                visitData.setVisitId(visit.getId());
                 visitData.setRequestData(getRequest(invocation.getArguments()));
             }
 

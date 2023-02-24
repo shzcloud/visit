@@ -90,6 +90,11 @@ public final class VisitHelp {
         return getUsername(ServletHelp.getRequest());
     }
 
+    public static boolean isDba() {
+        SysVisit visit = get();
+        return visit != null && visit.isDba();
+    }
+
     public static String getIp(ServletRequest request) {
         SysVisit visit = get(request);
         return visit == null ? null : visit.getIp();
@@ -100,19 +105,11 @@ public final class VisitHelp {
     }
 
     public static String signData(SysVisit visit) {
-        return visit.getIp() +
-                "-" + visit.getMac() +
-                "-" + visit.getBrowser() +
-                "-" + visit.getBrowserVersion() +
-                "-" + visit.getOs();
+        return visit.getIp() + "-" + visit.getMac() + "-" + visit.getBrowser() + "-" + visit.getBrowserVersion() + "-" + visit.getOs();
     }
 
     public static String signData(HttpServletRequest request) {
         UserAgent userAgent = ServletHelp.getUserAgent(request);
-        return ServletHelp.getIp(request) +
-                "-" + request.getHeader("Mac") +
-                "-" + Optional.ofNullable(userAgent.getBrowser()).map(Browser::getName).orElse(null) +
-                "-" + Optional.ofNullable(userAgent.getBrowserVersion()).map(Version::getVersion).orElse(null) +
-                "-" + Optional.ofNullable(userAgent.getOperatingSystem()).map(OperatingSystem::getName).orElse(null);
+        return ServletHelp.getIp(request) + "-" + request.getHeader("Mac") + "-" + Optional.ofNullable(userAgent.getBrowser()).map(Browser::getName).orElse(null) + "-" + Optional.ofNullable(userAgent.getBrowserVersion()).map(Version::getVersion).orElse(null) + "-" + Optional.ofNullable(userAgent.getOperatingSystem()).map(OperatingSystem::getName).orElse(null);
     }
 }

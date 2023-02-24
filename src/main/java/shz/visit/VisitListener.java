@@ -39,6 +39,7 @@ public class VisitListener implements ServletRequestListener {
         visit.setAppName(appName);
         visit.setLogin(Boolean.FALSE);
         visit.setException(Boolean.FALSE);
+        visit.setRecord(Boolean.TRUE);
 
         if (servletRequest instanceof HttpServletRequest) {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -63,7 +64,7 @@ public class VisitListener implements ServletRequestListener {
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
         SysVisit visit = VisitHelp.get(sre.getServletRequest());
-        if (visit == null) return;
+        if (visit == null || !visit.isRecord()) return;
         visit.setDestroyedTime(LocalDateTime.now());
         visit.setElapsedTime(TimeHelp.between(ChronoUnit.MILLIS, visit.getCreateTime(), visit.getDestroyedTime()));
         recorder.accept(visit);

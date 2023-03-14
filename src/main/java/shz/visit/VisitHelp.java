@@ -5,7 +5,7 @@ import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
 import shz.core.Coder;
-import shz.core.hash.Hash;
+import shz.core.hash.MdHash;
 import shz.core.id.IdHelp;
 import shz.spring.ServletHelp;
 import shz.visit.entity.SysVisit;
@@ -20,7 +20,7 @@ public final class VisitHelp {
         throw new IllegalStateException();
     }
 
-    static final String VISIT = Coder.hexEncode(Hash.SHA256.hash(IdHelp.nanoId().getBytes()));
+    static final String VISIT = Coder.hexEncode(MdHash.SHA256.hash(IdHelp.nanoId().getBytes()));
 
     public static SysVisit get(ServletRequest request) {
         return request == null ? null : (SysVisit) request.getAttribute(VISIT);

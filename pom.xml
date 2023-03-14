@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.shzcloud</groupId>
     <artifactId>visit</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>visit</name>
-    <description>visit</description>
+    <name>${project.artifactId}</name>
+    <description>${project.artifactId}</description>
     <url>https://www.shzcloud.com</url>
     <licenses>
         <license>
@@ -26,30 +25,43 @@
         </developer>
     </developers>
     <scm>
-        <url>https://www.shzcloud.com/git/visit</url>
+        <connection>scm:git:ssh://git@www.shzcloud.com:/home/git/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:ssh://git@www.shzcloud.com:/home/git/${project.artifactId}.git
+        </developerConnection>
+        <url>https://www.shzcloud.com/git/${project.artifactId}</url>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>oss</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>oss-snapshot</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <shz-core.version>1.1.9</shz-core.version>
-        <shz-ast.version>1.0.2</shz-ast.version>
-        <shz-spring-bean.version>1.0.6</shz-spring-bean.version>
-        <shz-spring.version>1.1.11</shz-spring.version>
-        <shz-orm.version>1.2.10</shz-orm.version>
-        <shz-jdbc.version>1.2.9</shz-jdbc.version>
+        <maven.compiler.version>3.11.0</maven.compiler.version>
+        <maven.surefire.version>3.0.0-M9</maven.surefire.version>
+        <maven.release.version>3.0.0-M7</maven.release.version>
+        <maven.source.version>3.2.1</maven.source.version>
+        <maven.javadoc.version>3.4.1</maven.javadoc.version>
+        <maven.gpg.version>3.0.1</maven.gpg.version>
+        <maven.deploy.version>3.1.0</maven.deploy.version>
+        <junit-jupiter.version>5.9.2</junit-jupiter.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <shz-core.version>1.2.1</shz-core.version>
+        <shz-ast.version>1.0.3</shz-ast.version>
+        <shz-spring-bean.version>1.1.1</shz-spring-bean.version>
+        <shz-spring.version>1.2.1</shz-spring.version>
+        <shz-orm.version>1.2.11</shz-orm.version>
+        <shz-jdbc.version>1.2.10</shz-jdbc.version>
         <spring.boot.version>2.7.4</spring.boot.version>
     </properties>
 
@@ -66,6 +78,23 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.shzcloud</groupId>
             <artifactId>core</artifactId>
@@ -113,52 +142,101 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
                 <configuration>
-                    <doclint>none</doclint>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven.release.version}</version>
+                <configuration>
+                    <tagBase>ssh://git@www.shzcloud.com:/home/git/${project.artifactId}/tags/</tagBase>
+                    <branchBase>ssh://git@www.shzcloud.com:/home/git/${project.artifactId}/branches/</branchBase>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release-profile-custom</releaseProfiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-profile-custom</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven.source.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven.javadoc.version}</version>
+                        <configuration>
+                            <doclint>none</doclint>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>${maven.deploy.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
